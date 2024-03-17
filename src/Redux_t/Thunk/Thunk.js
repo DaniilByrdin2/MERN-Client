@@ -6,7 +6,7 @@ import { stringToJson, joinHelperForm } from "../Helpers_Function/Helper"
 
 export const initBets = () => async ( dispanch ) => {
   await axios
-  .get("http://localhost:5000")
+  .get("http://localhost:8080")
   .then( (res) => { 
     const data = stringToJson(res.data)
     dispanch( initStore(  data ) ) 
@@ -18,7 +18,7 @@ export const initBets = () => async ( dispanch ) => {
 export const addBetsThunk = (formdata) => async (dispatch) => {
   const objBetJson = joinHelperForm( formdata )
 
-  await axios.post( "http://localhost:5000/add", { bet: objBetJson },
+  await axios.post( "http://localhost:8080/add", { bet: objBetJson },
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -31,14 +31,14 @@ export const addBetsThunk = (formdata) => async (dispatch) => {
 
 export const deleteAllThunk = () => async (dispatch) => {
   const all = "all"
-  await axios.delete(`http://localhost:5000/delete${all}`, )
+  await axios.delete(`http://localhost:8080/delete${all}`, )
   .then( () => dispatch( deleteAllBets() ) )
   .catch( e => console.log(e) )
 }
 
 export const deleteBetThunk = ( id, sum ) => async (dispatch) => {
   
-  await axios.delete( `http://localhost:5000/delete${id}`, )
+  await axios.delete( `http://localhost:8080/delete${id}`, )
   .then( () => { dispatch( deleteBet( { id, sum } ) )} )
   .catch( e => console.log(e) )
 }
@@ -47,7 +47,7 @@ export const updateThunk = (payload) => async ( dispatch ) => {
   const objBetJson = joinHelperForm( payload.dataBet )
   const bet = JSON.parse( objBetJson.dataBet )
 
-  await axios.put( `http://localhost:5000/update${payload.id}`, { bet: objBetJson }, {
+  await axios.put( `http://localhost:8080/update${payload.id}`, { bet: objBetJson }, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
